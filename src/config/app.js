@@ -11,8 +11,8 @@ const nodeDevEnv = process.env.NODE_ENV == 'development' ? true : false;
 export default {
   nodeDevEnv: nodeDevEnv,
   apiUrl: nodeDevEnv ? devApiUrl : proApiUrl,
-  siteName: 'Element UI Admin模板',
-  minSiteMame: 'EUI',
+  siteName: 'FC Helper',
+  minSiteMame: 'FCH',
   apiPrefix: "",
   timeout: 5000,
   cookiesExpires: 7,
@@ -20,6 +20,6 @@ export default {
   requestRetryDelay: 800,
   tokenKey: 'ACCESS_TOKEN',
   userInfoKey: 'USER_INFO',
-  gitHub: 'https://github.com/xusenlin/ElementUIAdmin2',
+  gitHub: 'https://github.com/misolab/ElementUIAdmin2',
   ...localKey
 }

@@ -6,7 +6,7 @@
         <p>{{ $Config.siteName }}</p>
       </div>
       <el-input
-          placeholder="请输入用户名"
+          placeholder="User ID"
           suffix-icon="fa fa-user"
           v-model="userNmae"
           style="margin-bottom: 18px"
@@ -14,7 +14,7 @@
       </el-input>
 
       <el-input
-          placeholder="请输入密码"
+          placeholder="Password"
           suffix-icon="fa fa-keyboard-o"
           v-model="password"
           type="password"
@@ -27,10 +27,11 @@
           type="primary" :loading="loginLoading"
           style="width: 100%;margin-bottom: 18px"
           @click.native="login"
-      >登录
+      >Login
       </el-button>
       <div>
         <el-checkbox v-model="Remenber"> Remenber</el-checkbox>
+        <!-- TODO : 회원가입 절차 -->
         <a href="javascript:;" style="float: right;color: #3C8DBC;font-size: 14px">Register</a>
       </div>
 
@@ -55,6 +56,7 @@
       login() {
         this.loginLoading = true;
         //loginApi({userNmae:this.userNmae,password:this.password}).then(r=>{}).catch(_=>{})
+        //  TODO : API - Login
         setTimeout(() => {
           setToken('123456789');
           this.$notify({

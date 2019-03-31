@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Personal from './personal'
+import Personal from "./personal";
 
 Vue.use(Router)
 
@@ -15,79 +15,62 @@ let RouteList = [
       keepAlive: false,
     },
     children: [
+
       {
         path: '/',
-        name: 'Dashboard',
+        name: 'Home',
         meta: {
-          title: '首页',
+          title: 'Home',
           keepAlive: true
         },
-        component: resolve => require(['@/views/home/Index.vue'], resolve),
+        component: resolve => require(['@/views/_home/index.vue'], resolve),
       },
+
       {
-        path: '/font_awesome',
-        name: 'FontAwesome',
+        path: '/keyman',
+        name: 'Keyman',
         meta: {
-          title: 'FontAwesome 图标',
+          title: '키맨 관리',
           keepAlive: false
         },
-        component: resolve => require(['@/views/icon/FontAwesome.vue'], resolve),
+        component: resolve => require(['@/views/_keyman/index.vue'], resolve),
       },
       {
-        path: '/element_icon',
-        name: 'ElementIcon',
+        path: '/client',
+        name: 'Clinet',
         meta: {
-          title: 'Element 图标',
+          title: '고객 관리',
           keepAlive: false
         },
-        component: resolve => require(['@/views/icon/ElementIcon.vue'], resolve),
+        component: resolve => require(['@/views/_client/index.vue'], resolve),
       },
       {
-        path: '/post_manage',
-        name: 'PostManage',
+        path: '/sales',
+        name: 'Sales',
         meta: {
-          title: '文章管理',
+          title: '영업관리',
           keepAlive: false
         },
-        component: resolve => require(['@/views/contentManage/Index.vue'], resolve),
+        component: resolve => require(['@/views/_sales/index.vue'], resolve),
       },
       {
-        path: '/user_manage',
-        name: 'UserManage',
+        path: '/balance',
+        name: 'Balance',
         meta: {
-          title: '用户列表',
+          title: '정산관리',
           keepAlive: true
         },
-        component: resolve => require(['@/views/userManage/Index.vue'], resolve),
+        component: resolve => require(['@/views/_balance/index.vue'], resolve),
       },
       {
-        path: '/category_manage',
-        name: 'CategoryManage',
+        path: '/fc',
+        name: 'FC',
         meta: {
-          title: '分类列表',
+          title: 'FC관리',
           keepAlive: true
         },
-        component: resolve => require(['@/views/categoryManage/Index.vue'], resolve),
+        component: resolve => require(['@/views/_fc/index.vue'], resolve),
       },
-      {
-        path: '/role_manage',
-        name: 'RoleManage',
-        meta: {
-          title: '角色列表',
-          keepAlive: true
-        },
-        component: resolve => require(['@/views/permissionManage/role/Role.vue'], resolve),
-      },
-      {
-        path: '/permission_list',
-        name: 'PermissionList',
-        meta: {
-          title: '权限列表',
-          keepAlive: true
-        },
-        component: resolve => require(['@/views/permissionManage/permission/Index.vue'], resolve),
-      },
-      //个人中心，可能有修改密码，头像修改等路由
       Personal.index,
     ]
   },
@@ -102,19 +85,7 @@ let RouteList = [
       blank: resolve => require(['@/views/login/Login.vue'], resolve),
     }
   },
-
 ]
-
-
-RouteList[0].children.push({
-  path: '/build_code',
-  name: 'BuildCode',
-  meta: {
-    title: '构建代码',
-    keepAlive: true
-  },
-  component: resolve => require(['@/views/developmentTool/Build.vue'], resolve),
-});
 
 export default new Router({routes: RouteList})
 
