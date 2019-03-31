@@ -53,20 +53,32 @@
       }
     },
     methods: {
-      login() {
+      login(){
         this.loginLoading = true;
-        //loginApi({userNmae:this.userNmae,password:this.password}).then(r=>{}).catch(_=>{})
-        //  TODO : API - Login
-        setTimeout(() => {
-          setToken('123456789');
+        const loginParam = {userId:this.userNmae,pwd:this.password}
+        loginApi(loginParam).then(response=>{
+          console.log(response);
+
+          this.loginLoading = false;
+          const user = response.data.result_body.user;
+          setToken(user.name);
+
           this.$notify({
-            title: '登录成功',
-            message: '很高兴你使用ElementUIAdmin！别忘了给个Star哦。',
+            title: 'Login',
+            message: `안녕하세요 ${user.name} 님`,
             type: 'success'
           });
-          this.loginLoading = false;
+
           this.$router.push({path: '/'});
-        }, 1000);
+        }).catch(err=>{
+          console.error(err)
+          this.loginLoading = false;
+          this.$notify({
+            title: 'Login',
+            message: '실패',
+            type: 'warning'
+          });
+        })
       }
     }
   }

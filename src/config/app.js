@@ -1,10 +1,8 @@
 import localKey from './localKey'
 
-const devApiUrl = 'http://192.168.48.133:10003';
+const devApiUrl = 'http://127.0.0.1:8080';
+const proApiUrl = 'http://127.0.0.1:8080';
 
-
-const proApiUrl = 'http://api.youUrl.com';
-//const proApiUrl = 'http://192.168.49.196:10003';
 
 const nodeDevEnv = process.env.NODE_ENV == 'development' ? true : false;
 
