@@ -10,6 +10,15 @@ export function login(params) {
 }
 
 
+export function reqClient(params) {
+  return request({
+    url: '/client',
+    method: 'get',
+    data: params
+  })
+}
+
+
 export function sendSMS(params) {
   return request({
     url: '/pc/sendsms',
