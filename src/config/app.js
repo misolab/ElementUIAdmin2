@@ -19,5 +19,5 @@ export default {
   tokenKey: 'ACCESS_TOKEN',
   userInfoKey: 'USER_INFO',
   gitHub: 'https://github.com/misolab/ElementUIAdmin2',
-  ...localKey
+  // ...localKey
 }

@@ -1,91 +1,249 @@
 <template>
-  <div>
-    <ToolBar>
-      <!-- 검색조건 -->
-      <div>
-        <el-input style="width: 140px"></el-input>
+  <section>
+    <!--검색바-->
+    <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+      <el-form :inline="true" :model="filters">
+        <el-form-item>
+          <el-input v-model="filters.name" placeholder="이름"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="filters.phone" placeholder="전화번호"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-date-picker
+            v-model="filters.date"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="~"
+            start-placeholder="Start"
+            end-placeholder="End"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" v-on:click="loadData">검색</el-button>
+          <el-button type="warning" v-on:click="loadData">초기화</el-button>
+        </el-form-item>
+        <el-form-item style="float:right;">
+          <el-button type="primary" @click="handleAdd">신규 등록</el-button>
+        </el-form-item>
+      </el-form>
+    </el-col>
+    <!--테이블-->
+    <el-table
+      :data="users"
+      highlight-current-row
+      v-loading="listLoading"
+      @selection-change="selsChange"
+      style="width: 100%;"
+    >
+      <el-table-column type="index" label="번호" width="60"></el-table-column>
+      <el-table-column prop="name" label="이름" width="100" sortable></el-table-column>
+      <el-table-column prop="phone" label="전화번호" width="180"></el-table-column>
+      <el-table-column prop="regDate" label="등록일" width="120" sortable></el-table-column>
+      <el-table-column prop="parent" label="부모(키맨)" min-width="80" sortable></el-table-column>
+      <el-table-column prop="memo" label="메모" min-width="100"></el-table-column>
 
-        <!-- 등록 버튼 -->
-        <el-button type="primary" icon="el-icon-plus" @click="showDialog()">등록</el-button>
-      </div>
-    </ToolBar>
-    <!-- 리스트 -->
-    <el-table :data="roleData" border ref="table" style="width: 100%">
-      <el-table-column prop="key" label="角色key"></el-table-column>
-      <el-table-column prop="name" label="角色名称"></el-table-column>
-      <el-table-column prop="description" label="描述"></el-table-column>
-      <el-table-column label="操作" :render-header="tableAction" width="120">
-        <template slot-scope="scope">
-          <el-button
-            @click="editRole(scope.row)"
-            type="primary"
-            icon="el-icon-edit"
-            size="small"
-            circle
-          ></el-button>
-          <el-button
-            @click="currentEditPermissions = scope.row"
-            type="success"
-            icon="el-icon-setting"
-            size="small"
-            circle
-          ></el-button>
+      <el-table-column label width="150">
+        <template scope="scope">
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">편집</el-button>
+          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">삭제</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <!-- 페이징 -->
-    <el-pagination :page-size="20" :pager-count="11" layout="prev, pager, next" :total="1000"></el-pagination>
 
-    <!-- 등록/수정 팝업 -->
-    <el-dialog title="Tips" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
-      <span>This is a message</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
-      </span>
+    <!--페이징-->
+    <el-col :span="24" class="toolbar">
+      <el-pagination
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+        :page-size="20"
+        :total="total"
+        style="float:right;"
+      ></el-pagination>
+    </el-col>
+
+    <!-- 모달창 -->
+    <el-dialog title="키맨 편집" :visible.sync="editFormVisible" :close-on-click-modal="false">
+      <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+        <el-form-item label="이름" prop="name">
+          <el-input v-model="editForm.name" auto-complete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="전화번호" prop="phone">
+          <el-input v-model="editForm.phone" auto-complete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="부모(키맨)" prop="parent">
+          <el-input v-model="editForm.parent" auto-complete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="메모">
+          <el-input type="textarea" v-model="editForm.memo"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="editFormVisible = false">취소</el-button>
+        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">저장</el-button>
+      </div>
     </el-dialog>
-  </div>
+
+    <el-dialog title="신규 등록" :visible.sync="addFormVisible" :close-on-click-modal="false">
+      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
+        <el-form-item label="이름" prop="name">
+          <el-input v-model="addForm.name" auto-complete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="전화번호" prop="phone">
+          <el-input v-model="addForm.phone" auto-complete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="등록일" prop="regDate">
+          <el-date-picker v-model="addForm.regDate" type="date" placeholder="날짜를 선택해주세요"></el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="부모(키맨)" prop="parent">
+          <el-input v-model="addForm.parent" auto-complete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="메모">
+          <el-input type="textarea" v-model="addForm.memo"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="addFormVisible = false">취소</el-button>
+        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">저장</el-button>
+      </div>
+    </el-dialog>
+  </section>
 </template>
 
 <script>
-import ToolBar from "@/components/ToolBar.vue";
-
 export default {
+  name: "keyman",
   data() {
     return {
-      dialogTitle: "키맨등록/수정",
-      dialogVisible: false,
-      roleData: [
-        {
-          id: 1,
-          key: "SuperAdmin",
-          name: "超级管理员",
-          description: "具有最高权限,全站唯一"
-        },
-        {
-          id: 2,
-          key: "NormalAdmin",
-          name: "普通管理员",
-          description: "拥有所有权限,除权限管理权限"
-        },
-        { id: 4, key: "Admin", name: "一般管理员", description: "只有查看权限" }
-      ]
+      filters: {
+        name: "",
+        phone: "",
+        date: ""
+      },
+      users: [],
+      total: 0,
+      page: 1,
+      listLoading: false,
+
+      //  ------  add -------
+      addFormVisible: false,
+      addLoading: false,
+      addFormRules: {
+        name: [
+          { required: true, message: "이름을 입력해주세요", trigger: "blur" }
+        ],
+        phone: [
+          {
+            required: true,
+            message: "전화번호를 입력해주세요",
+            trigger: "blur"
+          }
+        ],
+        regDate: [
+          { required: true, message: "등록일을 선택해주세요", trigger: "blur" }
+        ]
+      },
+      // 신규 입력정보
+      addForm: {
+        name: "",
+        phone: "",
+        regDate: "",
+        parent: "",
+        memo: ""
+      },
+      //  ----------------------
+
+      //  ------  edit  -------
+      editFormVisible: false,
+      editLoading: false,
+      editFormRules: {
+        name: [
+          { required: true, message: "이름을 입력해주세요", trigger: "blur" }
+        ],
+        phone: [
+          {
+            required: true,
+            message: "전화번호를 입력해주세요",
+            trigger: "blur"
+          }
+        ],
+        regDate: [
+          { required: true, message: "등록일을 선택해주세요", trigger: "blur" }
+        ]
+      },
+      editForm: {
+        name: "",
+        phone: "",
+        regDate: "",
+        parent: "",
+        memo: ""
+      }
+      //  ----------------------
     };
   },
   methods: {
-    showDialog() {
-      this.dialogVisible = true;
+    editSubmit() {
+      console.log("addSubmit");
     },
-    handleClose(done) {
-      this.$confirm("Are you sure to close this dialog?")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
+    addSubmit() {
+      console.log("addSubmit");
+    },
+    handleAdd: function() {
+      console.log("handleAdd");
+      this.addFormVisible = true;
+      this.addForm.regDate = util.formatDate.format(new Date(), "yyyy-MM-dd");
+    },
+    handleEdit: function(index, row) {
+      console.log("handleEdit");
+      this.editFormVisible = true;
+      this.editForm = Object.assign({}, row);
+
+      console.log(this.editForm);
+    },
+
+    loadData() {
+      this.total = 1000;
+      this.users = [
+        {
+          num: 1,
+          name: "한키맨",
+          phone: "010-1111-2222",
+          regDate: "2018-03-01",
+          parent: "",
+          memo: ""
+        },
+        {
+          num: 2,
+          name: "최키맨",
+          phone: "010-3333-4444",
+          regDate: "2018-03-02",
+          parent: "한키맨",
+          memo: ""
+        },
+        {
+          num: 3,
+          name: "박 키맨",
+          phone: "010-5555-6666",
+          regDate: "2018-03-01",
+          parent: "",
+          memo: "한키맨 큰아들"
+        }
+      ];
     }
   },
-  components: {
-    ToolBar
+  components: {},
+  mounted() {
+    this.loadData();
   }
 };
 </script>
