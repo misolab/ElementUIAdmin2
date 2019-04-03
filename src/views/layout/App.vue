@@ -139,7 +139,7 @@ export default {
         return;
       }
       if (this.isCollapse) navBar.style.width = "calc(100% - 64px)";
-      else navBar.style.width = "calc(100% - 230px)";
+      else navBar.style.width = "calc(100% - 200px)";
     },
     ToggleGrayMode() {
       document.body.classList.toggle("gray-mode");
@@ -266,7 +266,7 @@ export default {
   }
 
   .aside {
-    margin-left: -230px;
+    margin-left: -200px;
   }
 
   .main {
@@ -286,7 +286,7 @@ export default {
   display: flex;
 
   .el-menu:not(.el-menu--collapse) {
-    width: 230px;
+    width: 200px;
   }
 
   .app {
@@ -330,7 +330,7 @@ export default {
   }
 
   .app-body {
-    margin-left: 230px;
+    margin-left: 200px;
     -webkit-transition: margin-left 0.3s ease-in-out;
     transition: margin-left 0.3s ease-in-out;
   }
@@ -355,7 +355,7 @@ export default {
       display: none;
     }
 
-    width: 230px;
+    width: 200px;
     height: 50px;
     text-align: center;
     overflow: hidden;

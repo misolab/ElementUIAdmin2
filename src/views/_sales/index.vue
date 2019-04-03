@@ -4,13 +4,14 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.name" placeholder="이름"></el-input>
+          <el-input style="width: 100px" v-model="filters.name" placeholder="이름"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="filters.keyman" placeholder="키맨"></el-input>
+          <el-input style="width: 100px" v-model="filters.keyman" placeholder="전화번호"></el-input>
         </el-form-item>
         <el-form-item>
           <el-date-picker
+            style="width: 240px; font-size: 10px"
             v-model="filters.date"
             type="daterange"
             align="right"
@@ -21,11 +22,11 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="loadData">검색</el-button>
-          <el-button type="warning" v-on:click="loadData">초기화</el-button>
+          <el-button size="medium" type="primary" v-on:click="loadData">검색</el-button>
+          <el-button size="medium" type="warning" v-on:click="loadData">초기화</el-button>
         </el-form-item>
         <el-form-item style="float:right;">
-          <el-button type="primary" @click="handleAdd">신규 등록</el-button>
+          <el-button size="medium" type="primary" @click="handleAdd">신규 등록</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -37,19 +38,19 @@
       v-loading="listLoading"
       style="width: 100%;"
     >
-      <el-table-column prop="sid" label="계약번호" width="100"></el-table-column>
-      <el-table-column prop="regDate" label="계약일" width="120" sortable></el-table-column>
-      <el-table-column prop="name" label="이름" width="100" sortable></el-table-column>
-      <el-table-column prop="payment" label="금액" min-width="100" sortable></el-table-column>
-      <el-table-column prop="rate" label="비율" min-width="100" sortable></el-table-column>
-      <el-table-column prop="keyman" label="키맨" min-width="80" sortable></el-table-column>
-      <el-table-column prop="memo" label="메모" min-width="100"></el-table-column>
-      <el-table-column prop="orgId" label="원계약번호" width="100"></el-table-column>
+      <el-table-column align="center" prop="sid" label="계약" min-width="60"></el-table-column>
+      <el-table-column align="center" prop="regDate" label="계약일" min-width="100" sortable></el-table-column>
+      <el-table-column align="center" prop="name" label="이름" min-width="80"></el-table-column>
+      <el-table-column align="center" prop="payment" label="금액" min-width="100" sortable></el-table-column>
+      <el-table-column align="center" prop="rate" label="비율" min-width="80" sortable></el-table-column>
+      <el-table-column align="center" prop="keyman" label="키맨" min-width="80" sortable></el-table-column>
+      <el-table-column align="center" prop="memo" label="메모" min-width="100"></el-table-column>
+      <el-table-column align="center" prop="orgId" label="원계약" min-width="60"></el-table-column>
 
-      <el-table-column label width="150">
+      <el-table-column label min-width="140">
         <template scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">편집</el-button>
-          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">삭제</el-button>
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">편집</el-button>
+          <el-button type="danger" size="mini" @click="handleDel(scope.$index, scope.row)">삭제</el-button>
         </template>
       </el-table-column>
     </el-table>

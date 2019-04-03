@@ -4,13 +4,14 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.name" placeholder="이름"></el-input>
+          <el-input style="width: 100px" v-model="filters.name" placeholder="이름"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="filters.phone" placeholder="전화번호"></el-input>
+          <el-input style="width: 100px" v-model="filters.phone" placeholder="전화번호"></el-input>
         </el-form-item>
         <el-form-item>
           <el-date-picker
+            style="width: 240px; font-size: 10px"
             v-model="filters.date"
             type="daterange"
             align="right"
@@ -21,11 +22,11 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getUsers">검색</el-button>
-          <el-button type="warning" v-on:click="getUsers">초기화</el-button>
+          <el-button size="medium" type="primary" v-on:click="loadData">검색</el-button>
+          <el-button size="medium" type="warning" v-on:click="loadData">초기화</el-button>
         </el-form-item>
         <el-form-item style="float:right;">
-          <el-button type="primary" @click="handleAdd">신규 등록</el-button>
+          <el-button  size="medium" type="primary" @click="handleAdd">신규 등록</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -38,19 +39,18 @@
       @selection-change="selsChange"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="번호" width="60"></el-table-column>
-      <el-table-column prop="name" label="이름" width="100" sortable></el-table-column>
-      <el-table-column prop="phone" label="전화번호" width="180"></el-table-column>
-      <el-table-column prop="regDate" label="등록일" width="120" sortable></el-table-column>
-      <el-table-column prop="count" label="건수" width="80" sortable></el-table-column>
-      <el-table-column prop="payment" label="금액" min-width="100" sortable></el-table-column>
-      <el-table-column prop="keyman" label="키맨" min-width="80" sortable></el-table-column>
-      <el-table-column prop="memo" label="메모" min-width="100"></el-table-column>
+      <el-table-column align="center" type="index" label="번호" min-width="60"></el-table-column>
+      <el-table-column align="center" prop="name" label="이름" min-width="80" sortable></el-table-column>
+      <el-table-column align="center" prop="phone" label="전화번호" min-width="120"></el-table-column>
+      <el-table-column align="center" prop="regDate" label="등록일" min-width="100" sortable></el-table-column>
+      <el-table-column align="center" prop="payment" label="금액" min-width="100" sortable></el-table-column>
+      <el-table-column align="center" prop="keyman" label="키맨" min-width="80" sortable></el-table-column>
+      <el-table-column align="center" prop="memo" label="메모" min-width="100"></el-table-column>
 
-      <el-table-column label width="150">
+      <el-table-column label min-width="140">
         <template scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">편집</el-button>
-          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">삭제</el-button>
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">편집</el-button>
+          <el-button type="danger" size="mini" @click="handleDel(scope.$index, scope.row)">삭제</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -229,7 +229,7 @@ export default {
           this.listLoading = false;
         });
     },
-    getUsers() {
+    loadData() {
       let para = {
         page: this.page,
         name: this.filters.name
@@ -278,7 +278,7 @@ export default {
               message: "删除成功",
               type: "success"
             });
-            this.getUsers();
+            this.loadData();
           });
         })
         .catch(() => {});
@@ -313,7 +313,7 @@ export default {
               });
               this.$refs["editForm"].resetFields();
               this.editFormVisible = false;
-              this.getUsers();
+              this.loadData();
             });
           });
         }
@@ -340,7 +340,7 @@ export default {
               });
               this.$refs["addForm"].resetFields();
               this.addFormVisible = false;
-              this.getUsers();
+              this.loadData();
             });
           });
         }
@@ -348,11 +348,11 @@ export default {
     },
     handleCurrentChange(val) {
       this.page = val;
-      this.getUsers();
+      this.loadData();
     }
   },
   mounted() {
-    this.getUsers();
+    this.loadData();
   }
 };
 </script>

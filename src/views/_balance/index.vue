@@ -7,29 +7,47 @@
                     <div slot="header">
                         <el-button style="float: right; position: relative; top: 10px;">완료</el-button>
                         <span>04/04 정산 금액</span>
-                        <h1>350,000 원</h1>
+                        <h1>1,350,000 원</h1>
                     </div>
 
-                    <div class="demo" style="padding: 10px">
-                        <div style="padding: 10px; margin: 20px 0px 20px 0px;">
+                    <div class="demo">
+
+                        <div style="margin: 20px 0px 20px 0px;">
                             <h3>김고객</h3>
                             <div>
-                                <span style="font-size: large; font-weight: bold">1,000,000 X 10%</span>
-                                <el-input placeholder="+추가정산" style="width: 180px; margin: 0 10px 0 10px;"></el-input>
-                                =
-                                <el-button plain type="primary" style="float: right">100,000 원</el-button>
+                                <span style="font-size: medium; font-weight: bold">1,000,000 의 10% +</span>
+                                <el-input size="small" v-model="temp_0" placeholder="추가정산" style="width: 80px; margin: 0 5px 0 5px;"></el-input>=
+                                <el-button size="small" plain type="primary" style="float: right">100,000 원</el-button>
                             </div>
                         </div>
 
-                        <div style="padding: 10px; margin: 20px 0px 20px 0px;">
+                        <div style="margin: 20px 0px 20px 0px;">
                             <h3>박고객</h3>
                             <div>
-                                <span style="font-size: large; font-weight: bold">5,000,000 X 5%</span>
-                                <el-input placeholder="+추가정산" style="width: 180px; margin: 0 10px 0 10px;"></el-input>
-                                =
-                                <el-button plain type="primary" style="float: right">250,000 원</el-button>
+                                <span style="font-size: medium; font-weight: bold">1,000,000 의 10% +</span>
+                                <el-input size="small" v-model="temp_1" placeholder="추가정산" style="width: 80px; margin: 0 5px 0 5px;"></el-input>=
+                                <el-button size="small" plain type="primary" style="float: right">100,000 원</el-button>
                             </div>
                         </div>
+
+                        <div style="margin: 20px 0px 20px 0px;">
+                            <h3>김고객</h3>
+                            <div>
+                                <span style="font-size: medium; font-weight: bold">1,000,000 의 10% +</span>
+                                <el-input size="small" v-model="temp_0" placeholder="추가정산" style="width: 80px; margin: 0 5px 0 5px;"></el-input>=
+                                <el-button size="small" plain type="primary" style="float: right">100,000 원</el-button>
+                            </div>
+                        </div>
+
+                        <div style="margin: 20px 0px 20px 0px;">
+                            <h3>박고객</h3>
+                            <div>
+                                <span style="font-size: medium; font-weight: bold">1,000,000 의 10% +</span>
+                                <el-input size="small" v-model="temp_1" placeholder="추가정산" style="width: 80px; margin: 0 5px 0 5px;"></el-input>=
+                                <el-button size="small" plain type="primary" style="float: right">100,000 원</el-button>
+                            </div>
+                        </div>
+
                     </div>
                 </el-card>
             </el-col>
@@ -41,12 +59,12 @@
                         <h1>12,345,678,900 원</h1>
                     </div>
                     <div class="demo">
-                        <div id="chartPie" style="width:100%; height:400px;"></div>
+                        <div id="chartPie" style="width:100%; height:300px;"></div>
 
                         <el-table :data="users" style="width: 100%" @cell-click="dialogTableVisible=true">
-                            <el-table-column label="이름" prop="name" width="150" align="center"></el-table-column>
-                            <el-table-column label="건수" prop="count" width="100" align="center"></el-table-column>
-                            <el-table-column label="정산금액" prop="payment" width="200" align="center"></el-table-column>
+                            <el-table-column label="이름" prop="name" min-width="100" align="center"></el-table-column>
+                            <el-table-column label="건수" prop="count" min-width="100" align="center"></el-table-column>
+                            <el-table-column label="정산금액" prop="payment" min-width="100" align="center"></el-table-column>
                         </el-table>
                     </div>
                 </el-card>
@@ -89,12 +107,12 @@
         name: "index",
         data() {
             return {
+                temp_1:"",
+                temp_0:"",
                 chartPie: null,
                 users:[
                     {count:33, payment:'335,000', value: 335, name: '김KM'},
                     {count:31, payment:'310,000', value: 310, name: '한KM'},
-                    {count:23, payment:'234,000', value: 234, name: '도옥현'},
-                    {count:13, payment:'135,000', value: 135, name: '최용일'},
                     {count:154, payment:'1,548,000', value: 1548, name: '최KM'}
                 ],
                 dialogTableVisible: false,
