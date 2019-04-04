@@ -7,7 +7,7 @@
                     <div slot="header">
                         <el-button style="float: right; position: relative; top: 10px;">완료</el-button>
                         <span>04/04 정산 금액</span>
-                        <h1>1,350,000 원</h1>
+                        <h1>₩ 1,350,000</h1>
                     </div>
 
                     <div class="demo">
@@ -56,7 +56,7 @@
                 <el-card style="border-radius: 0">
                     <div slot="header">
                         <span>총 정산금액</span>
-                        <h1>12,345,678,900 원</h1>
+                        <h1>₩ 12,345,678,900</h1>
                     </div>
                     <div class="demo">
                         <div id="chartPie" style="width:100%; height:300px;"></div>
@@ -75,20 +75,20 @@
             <el-timeline>
                 <el-timeline-item timestamp="2018/4/12" placement="top">
                     <el-card>
-                        <h4>김 고객 300,000 원 </h4>
-                        <p>연락처 제공 - 2018/4/2</p>
+                        <h3>김 고객 300,000 원 </h3>
+                        <p>고객 등록일 - 2018/4/2</p>
                     </el-card>
                 </el-timeline-item>
                 <el-timeline-item timestamp="2018/4/3" placement="top">
                     <el-card>
-                        <h4>이 고객 10,00,000 원 </h4>
-                        <p>연락처 제공 - 2018/3/30</p>
+                        <h3>이 고객 10,00,000 원 </h3>
+                        <p>고객 등록일 - 2018/3/30</p>
                     </el-card>
                 </el-timeline-item>
                 <el-timeline-item timestamp="2018/4/2" placement="top">
                     <el-card>
-                        <h4>박 고객 1,500,000 원 </h4>
-                        <p>연락처 제공 - 2018/3/30</p>
+                        <h3>박 고객 1,500,000 원 </h3>
+                        <p>고객 등록일 - 2018/3/30</p>
                     </el-card>
                 </el-timeline-item>
             </el-timeline>

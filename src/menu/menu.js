@@ -5,7 +5,7 @@ let menu = {};
  * @type {{name: string, path: string, icon: string}}
  */
 menu.keyman = {
-    name: 'Keyman',
+    name: '키맨 관리',
     path: '/keyman',
     icon: 'fa fa-tachometer',
 };
@@ -16,7 +16,7 @@ menu.keyman = {
  * @type {{name: string, icon: string, children: {}}}
  */
 menu.client = {
-    name: 'Client',
+    name: '고객 관리',
     path: '/client',
     icon: 'fa fa-th',
 };
@@ -26,7 +26,7 @@ menu.client = {
  * @type {{name: string, icon: string, children: {}}}
  */
 menu.sales = {
-    name: 'Sales',
+    name: '영업 관리',
     path: '/sales',
     icon: 'fa fa-file-text-o'
 };
@@ -36,7 +36,7 @@ menu.sales = {
  * @type {{name: string, icon: string, children: {}}}
  */
 menu.balance = {
-    name: 'Balance',
+    name: '정산 관리',
     path: '/balance',
     icon: 'fa fa-user-circle-o'
 };
@@ -46,7 +46,7 @@ export default menu;
 if (process.env.NODE_ENV == 'development') {
 
     menu.fc = {
-        name: 'FC',
+        name: 'FC 관리',
         path: '/fc',
         icon: 'fa fa-wrench',
     };

@@ -22,11 +22,11 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button size="medium" type="primary" v-on:click="loadData">검색</el-button>
-          <el-button size="medium" type="warning" v-on:click="loadData">초기화</el-button>
+          <el-button size="medium" plain type="primary" v-on:click="loadData">검색</el-button>
+          <el-button size="medium" plain type="warning" v-on:click="loadData">초기화</el-button>
         </el-form-item>
         <el-form-item style="float:right;">
-          <el-button  size="medium" type="primary" @click="handleAdd">신규 등록</el-button>
+          <el-button  size="medium" type="primary" @click="handleAdd">키맨 등록</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -63,7 +63,7 @@
     </el-col>
 
     <!-- 모달창 -->
-    <el-dialog title="키맨 편집" :visible.sync="editFormVisible" :close-on-click-modal="false">
+    <el-dialog title="키맨 정보 수정" :visible.sync="editFormVisible" :close-on-click-modal="false">
       <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
         <el-form-item label="이름" prop="name">
           <el-input v-model="editForm.name" auto-complete="off"></el-input>
@@ -88,7 +88,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="신규 등록" :visible.sync="addFormVisible" :close-on-click-modal="false">
+    <el-dialog title="신규 키맨 등록" :visible.sync="addFormVisible" :close-on-click-modal="false">
       <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
         <el-form-item label="이름" prop="name">
           <el-input v-model="addForm.name" auto-complete="off"></el-input>
@@ -120,6 +120,8 @@
 </template>
 
 <script>
+import util from "../../utils/util";
+
 export default {
   name: "keyman",
   data() {
